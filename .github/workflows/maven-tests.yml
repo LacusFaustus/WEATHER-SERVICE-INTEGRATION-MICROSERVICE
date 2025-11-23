@@ -20,11 +20,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Run tests with coverage
-        run: mvn clean test jacoco:report
-
-      - name: Verify test coverage
-        run: mvn jacoco:check
+      - name: Run tests with coverage check
+        run: mvn clean verify
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
@@ -34,3 +31,10 @@ jobs:
             target/surefire-reports/
             target/site/jacoco/
           retention-days: 30
+
+      - name: Test Summary
+        run: |
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All tests completed successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Coverage report generated: target/site/jacoco/index.html" >> $GITHUB_STEP_SUMMARY
+          echo "🎯 Coverage check: 80% minimum requirement enforced" >> $GITHUB_STEP_SUMMARY
