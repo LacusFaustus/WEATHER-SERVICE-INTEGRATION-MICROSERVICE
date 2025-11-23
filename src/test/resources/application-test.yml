@@ -1,0 +1,42 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: none
+
+weather:
+  providers:
+    openweather:
+      base-url: http://test-openweather
+      api-key: test-key
+    weatherapi:
+      base-url: http://test-weatherapi
+      api-key: test-key
+    accuweather:
+      base-url: http://test-accuweather
+      api-key: test-key
+
+logging:
+  level:
+    com.weatherservice: DEBUG
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      weatherService:
+        register-health-indicator: false
+  ratelimiter:
+    instances:
+      weatherService:
+        register-health-indicator: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      enabled: true

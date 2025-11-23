@@ -1,0 +1,82 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# IDE files
+.idea/
+*.iws
+*.iml
+*.ipr
+.classpath
+.project
+.settings/
+bin/
+*.swp
+*.swo
+
+# Build output
+build/
+target/
+out/
+
+# Gradle
+.gradle/
+!gradle-wrapper.jar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Application properties
+application-local.yml
+application-secret.yml
+
+# Logs
+logs/
+*.log.*
+
+# Docker
+docker-compose.override.yml
+
+# Environment variables
+.env
+.env.local
+.env.prod
+
+# Redis data
+dump.rdb
+data/
+
+# Temp files
+tmp/
+temp/

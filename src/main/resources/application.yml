@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: weather-service
+  profiles:
+    active: dev
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: 1000ms
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000 # 10 minutes
+      cache-null-values: false
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+
+logging:
+  level:
+    com.weatherservice: INFO
+    org.springframework.data.redis: WARN
+
+weather:
+  providers:
+    openweather:
+      base-url: https://api.openweathermap.org/data/2.5
+      api-key: ${OPENWEATHER_API_KEY:}
+    weatherapi:
+      base-url: https://api.weatherapi.com/v1
+      api-key: ${WEATHERAPI_KEY:}
+    accuweather:
+      base-url: http://dataservice.accuweather.com
+      api-key: ${ACCUWEATHER_KEY:}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      weatherService:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 50
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 60s
+        permitted-number-of-calls-in-half-open-state: 10
+        slow-call-rate-threshold: 50
+        slow-call-duration-threshold: 5s
+  ratelimiter:
+    instances:
+      weatherService:
+        timeout-duration: 5s
+        limit-refresh-period: 1s
+        limit-for-period: 100
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+  endpoint:
+    health:
+      show-details: always

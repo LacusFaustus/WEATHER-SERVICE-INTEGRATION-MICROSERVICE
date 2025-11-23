@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  weather-service:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_HOST=redis
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+      - WEATHERAPI_KEY=${WEATHERAPI_KEY}
+      - ACCUWEATHER_KEY=${ACCUWEATHER_KEY}
+    depends_on:
+      - redis
+    networks:
+      - weather-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - weather-network
+
+volumes:
+  redis-data:
+
+networks:
+  weather-network:
+    driver: bridge
